@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./Player.css";
 
 function Player({ initialName, symbol }) {
   const [playerName, setPlayerName] = useState(initialName);

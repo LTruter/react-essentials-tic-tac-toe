@@ -3,20 +3,28 @@ import GameBoard from "./components/GameBoard";
 import Player from "./components/Player";
 import Log from "./components/Log";
 
+// Determines the correct player based on state.
+function deriveActivePlayer(gameTurns) {
+  let currentPlayer = "X";
+
+  // Checks if the most recent player was X and if it was, sets the currentPlayer to O
+  if (gameTurns.length > 0 && gameTurns[0].player === "X") {
+    currentPlayer = "O";
+  }
+
+  return currentPlayer;
+}
+
 function App() {
-  const [activePlayer, setActivePlayer] = useState("X");
+  // const [activePlayer, setActivePlayer] = useState("X");
   const [gameTurns, setGameTurns] = useState([]);
+  const activePlayer = deriveActivePlayer(gameTurns);
 
   function handleSelectSquare(rowIndex, colIndex) {
-    setActivePlayer((curActivePlayer) => (curActivePlayer === "X" ? "O" : "X"));
+    // setActivePlayer((curActivePlayer) => (curActivePlayer === "X" ? "O" : "X"));
 
     setGameTurns((prevTurns) => {
-      let currentPlayer = "X";
-
-      // Checks if the most recent player was X and if it was, sets the currentPlayer to O
-      if (prevTurns.length > 0 && prevTurns[0].player === "X") {
-        currentPlayer = "O";
-      }
+      let currentPlayer = deriveActivePlayer(prevTurns);
 
       // Updates the log with the square clicked and the player to currentPlayer
       const updatedTurns = [

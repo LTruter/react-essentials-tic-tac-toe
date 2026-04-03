@@ -1,11 +1,13 @@
 import { useState } from "react";
 
-function Player({ initialName, symbol, isActive }) {
+function Player({ initialName, symbol, isActive, onPlayerNameChange }) {
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
   function handleEditClick() {
     setIsEditing((isEditing) => !isEditing);
+
+    isEditing && onPlayerNameChange(symbol, playerName);
   }
 
   function handleChange(event) {
@@ -14,7 +16,13 @@ function Player({ initialName, symbol, isActive }) {
   }
 
   const editPlayerName = isEditing ? (
-    <input required type="text" value={playerName} onChange={handleChange} />
+    <input
+      required
+      type="text"
+      value={playerName}
+      onChange={handleChange}
+      autoFocus
+    />
   ) : (
     <span className="player-name">{playerName}</span>
   );
